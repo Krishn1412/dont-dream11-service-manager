@@ -1,6 +1,5 @@
 class GameRegistry:
     def __init__(self):
-        # Store games here: {game_id: {market_name: market_data}}
         self.games = {}
 
     def register_game(self, game_id):
