@@ -14,6 +14,10 @@ class GameRegistry:
                 "bets": [],
             }
     
+    def match_updates(self, game_id, market_name, ball_update):
+        # Write logic for match update
+        pass
+
     def update_odds(self, game_id, market_name, new_odds):
         if game_id in self.games and market_name in self.games[game_id]:
             self.games[game_id][market_name]["odds"] = new_odds
