@@ -1,3 +1,5 @@
+from core.bet_manager import BetManager
+
 class GameRegistry:
     def __init__(self):
         self.games = {}
@@ -13,7 +15,13 @@ class GameRegistry:
                 "odds": initial_odds,
                 "bets": [],
             }
-    
+            
+    def get_bet_manager(self, game_id: str, market: str) -> BetManager:
+        key = (game_id, market)
+        if key not in self.bet_managers:
+            self.bet_managers[key] = BetManager(game_id, market, self.grpc_client)
+        return self.bet_managers[key]
+        
     def match_updates(self, game_id, market_name, ball_update):
         # Write logic for match update
         pass
@@ -37,3 +45,4 @@ class GameRegistry:
 
     def market_exists(self, game_id, market_name):
         return self.game_exists(game_id) and market_name in self.games[game_id]
+    

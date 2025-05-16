@@ -1,10 +1,13 @@
 from ..generated.odds_engine_pb2 import Bet
+from typing import Dict, Tuple, List
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 class BetManager:
     
-    def __init__(self, game_id: str):
+    def __init__(self, game_id: str, market: str):
         self.game_id = game_id
+        self.market = market
+        self.active_bets: List[Bet] = []
 
     def place_bet(self, market: str, bet: Bet):
         with ThreadPoolExecutor(max_workers=2) as executor:
