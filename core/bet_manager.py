@@ -2,41 +2,25 @@ from ..generated.odds_engine_pb2 import Bet
 from typing import Dict, Tuple, List
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
+
 class BetManager:
-    
-    def __init__(self, game_id: str, market: str):
+    def __init__(self, game_id: str, market: str, grpc_client):
         self.game_id = game_id
         self.market = market
-        self.active_bets: List[Bet] = []
+        self.grpc_client = grpc_client
+        self.exposure = 0.0
 
-    def place_bet(self, market: str, bet: Bet):
-        with ThreadPoolExecutor(max_workers=2) as executor:
-            futures = {
-                executor.submit(self.validate_bet, bet): "validate",
-                executor.submit(self.query_latest_odds): "odds"
-            }
-
-            latest_odds = None
-
-            for future in as_completed(futures):
-                task = futures[future]
-                result = future.result()
-
-                if task == "odds":
-                    latest_odds = result
-
-        self.active_bets.append(bet)
-        self.update_exposure(bet)
-
-        return latest_odds
-
-    def validate_bet(self, market: str, bet: Bet):
-        # Add rules: max stake, odds mismatch, etc. TODO
-        pass
-
-    def update_exposure(self, market: str, bet: Bet):
-        #Call odds engine from here and update the code
-        pass
-    def query_latest_odds(self, market: str) -> OddsResponse:
-        # gRPC call to C++ OddsEngine
-        pass
+    def place_bet(self, bet):
+        self.exposure += bet.stake  # simplistic exposure logic
+        grpc_bet = {
+            "gameId": self.game_id,
+            "bet": {
+                "userId": bet.user_id,
+                "stake": bet.stake,
+                "odds": bet.odds,
+                "market": bet.market,
+                "teamA": bet.team_a,
+            },
+        }
+        response = self.grpc_client.place_bet(grpc_bet)
+        return response.winProbability

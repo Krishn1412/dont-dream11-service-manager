@@ -1,12 +1,14 @@
 from pydantic import BaseModel
 from typing import Dict, List
 
+
 class Bet(BaseModel):
     userId: str
     stake: float
     odds: float
     market: str
     teamA: bool
+
 
 class BetRequestModel(BaseModel):
     userId: str
@@ -15,9 +17,11 @@ class BetRequestModel(BaseModel):
     market: str
     teamA: bool
 
+
 class BetResponseModel(BaseModel):
     winProbability: float
     exposure: Dict[str, float]
+
 
 class BallUpdateModel(BaseModel):
     innings: int
@@ -36,15 +40,19 @@ class BallUpdateModel(BaseModel):
     bowler: str
     runs: int
 
+
 class MatchStateRequestModel(BaseModel):
     gameId: str
     update: BallUpdateModel
 
+
 class SetInitialOddsModel(BaseModel):
     initialProbability: float
 
+
 class OddsQueryResponseModel(BaseModel):
     winProbability: float
+
 
 class AckResponseModel(BaseModel):
     success: bool
