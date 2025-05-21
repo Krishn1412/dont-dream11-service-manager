@@ -1,24 +1,28 @@
+# core/game_registry.py
+
 from core.bet_manager import BetManager
+from core.game_updater import GameUpdater
 
 
 class GameRegistry:
-    def __init__(self, grpc_client):
+    def __init__(self, grpc_client, game_updater: GameUpdater):
+        self.grpc_client = grpc_client
+        self.game_updater = game_updater
         self.games = {}
         self.bet_managers = {}
-        self.grpc_client = grpc_client
 
-    def register_game(self, game_id: str):
+    def register_game(self, game_id):
         if game_id not in self.games:
             self.games[game_id] = {}
+            self.game_updater.start_polling(game_id)
 
-    def add_market(self, game_id: str, market_name: str, initial_odds: float):
+    def add_market(self, game_id, market_name, initial_odds=None):
         self.register_game(game_id)
         if market_name not in self.games[game_id]:
             self.games[game_id][market_name] = {
                 "odds": initial_odds,
                 "bets": [],
             }
-            self.grpc_client.set_initial_odds(game_id, market_name, initial_odds)
 
     def get_bet_manager(self, game_id: str, market: str) -> BetManager:
         key = (game_id, market)

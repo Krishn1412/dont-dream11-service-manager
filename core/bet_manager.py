@@ -1,4 +1,4 @@
-from ..generated.odds_engine_pb2 import Bet
+from generated.odds_engine_pb2 import Bet
 from typing import Dict, Tuple, List
 from concurrent.futures import ThreadPoolExecutor, as_completed
 

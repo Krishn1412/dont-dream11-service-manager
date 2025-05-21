@@ -1,11 +1,11 @@
 import grpc
-from odds_engine_pb2 import (
+from generated.odds_engine_pb2 import (
     MatchStateRequest,
     BetRequest,
     OddsQueryRequest,
     SetInitialOddsRequest,
 )
-from odds_engine_pb2_grpc import OddsEngineStub
+from generated.odds_engine_pb2_grpc import OddsEngineStub
 
 
 class GRPCClient:
