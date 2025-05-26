@@ -20,7 +20,6 @@ class BetRequestModel(BaseModel):
 
 class BetResponseModel(BaseModel):
     winProbability: float
-    exposure: Dict[str, float]
 
 
 class BallUpdateModel(BaseModel):

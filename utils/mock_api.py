@@ -4,7 +4,6 @@ import random
 
 app = FastAPI()
 
-
 @app.get("/game/{game_id}/latest")
 def get_latest_ball_update(game_id: str):
     return JSONResponse(
@@ -26,3 +25,8 @@ def get_latest_ball_update(game_id: str):
             "runs": random.randint(0, 6),
         }
     )
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run("mock_api:app", host="0.0.0.0", port=8001, reload=True)

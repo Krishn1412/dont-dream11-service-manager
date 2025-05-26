@@ -1,7 +1,7 @@
 import threading
 import time
 import requests
-from generated.odds_engine_pb2 import BallUpdate, MatchStateRequest
+from proto.odds_engine_pb2 import BallUpdate, MatchStateRequest
 from typing import Dict
 
 
@@ -22,7 +22,7 @@ class GameUpdater:
             while self.running_flags[game_id]:
                 try:
                     response = requests.get(
-                        f"http://localhost:8000/game/{game_id}/latest"
+                        f"http://localhost:8001/game/{game_id}/latest"
                     )
                     if response.status_code == 200:
                         data = response.json()

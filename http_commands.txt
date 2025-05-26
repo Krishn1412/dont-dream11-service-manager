@@ -1,0 +1,4 @@
+Initialise Game: http POST localhost:8000/game/match123/market/match_winner/init initialProbability:=0.65
+
+Get odds:  http GET localhost:8000/odds/match123/match_winner    
+Place Bets: http --json POST localhost:8000/bet/match123/match_winner userId="user1" stake:=100 odds:=1.5 market="match_winner" teamA:=true

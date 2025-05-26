@@ -1,16 +1,17 @@
 import grpc
-from generated.odds_engine_pb2 import (
+from proto.odds_engine_pb2 import (
     MatchStateRequest,
     BetRequest,
     OddsQueryRequest,
     SetInitialOddsRequest,
 )
-from generated.odds_engine_pb2_grpc import OddsEngineStub
+from proto.odds_engine_pb2_grpc import OddsEngineStub
 
 
 class GRPCClient:
     def __init__(self, host="localhost", port=50051):
         channel = grpc.insecure_channel(f"{host}:{port}")
+        print("Connecting to grpc server at", host, port)
         self.stub = OddsEngineStub(channel)
 
     def set_initial_odds(self, game_id, market, initial_probability):
