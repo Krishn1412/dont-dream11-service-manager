@@ -1,4 +1,3 @@
-# dont-dream11-service-manager
 # Dont-dream11 Odds Service Manager
 
 This is a FastAPI-based backend service that acts as the **entry point** between a frontend or external APIs and a high-performance C++ **odds engine**. It handles:
@@ -26,29 +25,29 @@ It integrates with a mock API for ball-by-ball cricket match updates.
 
 ## How It Works
 
-### 🏁 Game Initialization
+### Game Initialization
 - Registers a game and market in the `GameRegistry`.
 - Sets initial odds via gRPC.
 - Starts a background polling thread for mock match updates.
 
-### 🔄 Polling
+### Polling
 - A background thread (`GameUpdater`) fetches simulated ball-by-ball updates.
 - Each update is streamed to the gRPC-based C++ Odds Engine.
 
-### 💸 Bet Placement
+### Bet Placement
 - Validates incoming bet requests.
 - Updates exposure and market state in memory.
 - Sends bet details to the gRPC Odds Engine.
 - Tracks bet locally for settlement or auditing.
 
-### 📈 Odds Updates
+### Odds Updates
 - Odds are not cached — always fetched live from the Odds Engine via gRPC.
 - Reflect current match state and exposure instantly.
 
 ---
 
 
-## 🧠 Project Structure
+## Project Structure
 
 ```bash
 .
